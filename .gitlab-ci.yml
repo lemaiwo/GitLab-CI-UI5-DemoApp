@@ -1,0 +1,60 @@
+image: node:latest
+
+stages:
+  - init
+  - validation
+  - build
+  - test
+  - deploy
+ 
+before_script:
+  - pwd
+  - whoami
+  - echo "$CI_BUILD_REPO"
+  - echo "$CI_BUILD_NAME"
+  - echo "$CI_PIPELINE_ID"
+  - echo "$CI_PIPELINE_IID"
+  - echo "$CI_COMMIT_REF_SLUG"
+
+init-ci:
+  stage: init
+  script:
+    - sudo npm install
+    - node_modules/grunt-cli/bin/grunt --verbose clean
+  artifacts:
+    paths:
+    - node_modules/
+
+code-validation: 
+   stage: validation 
+   script: 
+     - node_modules/grunt-cli/bin/grunt -d -v fiori-test
+   dependencies:
+    - init-ci
+
+unit-test: 
+   stage: test 
+   script: 
+     - node_modules/grunt-cli/bin/grunt -d -v unit-test
+   dependencies:
+    - init-ci
+    
+build-app: 
+   stage: build 
+   script: 
+     - node_modules/grunt-cli/bin/grunt --verbose buildapp
+   dependencies:
+    - init-ci
+   artifacts:
+    paths:
+    - dist/
+
+deploy-abap: 
+   stage: deploy 
+   script: 
+     - node_modules/grunt-cli/bin/grunt --verbose deploy
+   dependencies:
+    - init-ci
+    - build-app
+   only:
+    - master

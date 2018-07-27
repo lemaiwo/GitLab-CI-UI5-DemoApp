@@ -1,0 +1,44 @@
+<mvc:View controllerName="be.wl.DemoMulitLabels.controller.View1" xmlns:html="http://www.w3.org/1999/xhtml" xmlns:mvc="sap.ui.core.mvc"
+	displayBlock="true" xmlns="sap.ui.table" xmlns:u="sap.ui.unified" xmlns:core="sap.ui.core" xmlns:m="sap.m">
+	<m:App id="idAppControl">
+		<m:pages>
+			<m:Page showHeader="false" enableScrolling="false" class="sapUiContentPadding">
+				<m:content>
+					<m:Button press="onAddLabel" text="test"></m:Button>
+					<TreeTable id="TreeTableBasic" rows="{path:'/catalog/clothing', parameters: {arrayNames:['categories']}}" selectionMode="None"
+						enableSelectAll="false" ariaLabelledBy="title">
+						<columns>
+							<Column multiLabels="{/labels/d1}">
+								<multiLabels>
+									<m:Label text="{value}"/>
+									<!--<m:Label text="test2"/>-->
+								</multiLabels>
+								<template>
+									<u:Currency value="{amount}" currency="{currency}"/>
+								</template>
+							</Column>
+							<Column multiLabels="{/labels/d1}">
+								<!--<Column width="13rem">-->
+								<multiLabels>
+									<m:Label text="{value}"/>
+									<!--<m:Label text="test2"/>-->
+								</multiLabels>
+								<template>
+									<m:Text text="{name}" wrapping="false"/>
+								</template>
+							</Column>
+							<Column width="11rem">
+								<m:Label text="Size"/>
+								<template>
+									<m:Select items="{path: '/sizes', templateShareable: true}" selectedKey="{size}" visible="{= !!${size}}" forceSelection="false">
+										<core:Item key="{key}" text="{value}"/>
+									</m:Select>
+								</template>
+							</Column>
+						</columns>
+					</TreeTable>
+				</m:content>
+			</m:Page>
+		</m:pages>
+	</m:App>
+</mvc:View>
