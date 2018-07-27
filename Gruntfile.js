@@ -83,7 +83,7 @@ module.exports = function (grunt) {
 				browserNoActivityTimeout: '30000',
 				frameworks: ['qunit', 'openui5'],
 				openui5: {
-					path: "https://fiori-dev.mas.elia.be/sap/public/bc/ui5_ui5/1/resources/sap-ui-core.js" // eslint-disable-line
+					path: "https://<<your-gateway-system>>/sap/public/bc/ui5_ui5/1/resources/sap-ui-core.js" // eslint-disable-line
 				},
 				files: [{
 					pattern: '**',
